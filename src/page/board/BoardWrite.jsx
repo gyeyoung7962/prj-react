@@ -34,8 +34,28 @@ export function BoardWrite() {
           }),
         navigate("/"),
       )
-      .catch()
+      .catch((e) => {
+        const code = e.response.status;
+        if (code === 400) {
+          toast({
+            status: "error",
+            description: "등록 실패 유효하지 않은 값이 있습니다",
+            position: "top",
+          });
+        }
+      })
       .finally();
+  }
+
+  let disableSaveButton = false;
+  if (title.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (content.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (writer.trim().length === 0) {
+    disableSaveButton = true;
   }
 
   return (
@@ -62,7 +82,11 @@ export function BoardWrite() {
         </FormControl>
       </Box>
       <Box>
-        <Button colorScheme={"blue"} onClick={handleSave}>
+        <Button
+          isDisabled={disableSaveButton}
+          colorScheme={"blue"}
+          onClick={handleSave}
+        >
           저장
         </Button>
       </Box>
