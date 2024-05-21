@@ -28,4 +28,5 @@ function App(props) {
     </ChakraProvider>
   );
 }
+
 export default App;
