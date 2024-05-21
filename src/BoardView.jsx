@@ -42,15 +42,27 @@ export function BoardView() {
   }, []);
 
   function handleClickRemove() {
-    axios.delete(`/api/board/${id}`).finally(
-      toast({
-        description: "삭제완료",
-        position: "top",
-        status: "info",
-        colorScheme: "red",
-      }),
-      navigate("/"),
-    );
+    axios
+      .delete(`/api/board/${id}`)
+      .then(
+        toast({
+          description: "삭제완료",
+          position: "top",
+          status: "info",
+          colorScheme: "red",
+        }),
+        navigate("/"),
+      )
+      .catch(() =>
+        toast({
+          status: "error",
+          description: `${id}번 게시물 삭제중 오류가 발생하였습니다`,
+          position: "top",
+        }),
+      )
+      .finally(() => {
+        onClose();
+      });
   }
 
   if (board === null) {
