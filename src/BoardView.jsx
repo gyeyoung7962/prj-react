@@ -48,8 +48,7 @@ export function BoardView() {
         toast({
           description: "삭제완료",
           position: "top",
-          status: "info",
-          colorScheme: "red",
+          status: "success",
         }),
         navigate("/"),
       )
@@ -100,7 +99,9 @@ export function BoardView() {
         </FormControl>
       </Box>
       <Box>
-        <Button colorScheme={"purple"}>수정</Button>
+        <Button colorScheme={"purple"} onClick={() => navigate(`/edit/${id}`)}>
+          수정
+        </Button>
         <Button colorScheme={"red"} onClick={onOpen}>
           삭제
         </Button>
