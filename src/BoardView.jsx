@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
@@ -15,7 +16,7 @@ export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
   const toast = useToast();
-  const navaigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`/api/board/${id}`)
@@ -31,9 +32,22 @@ export function BoardView() {
       });
   }, []);
 
+  function handleClickRemove() {
+    axios.delete(`/api/board/${id}`).finally(
+      toast({
+        description: "삭제완료",
+        position: "top",
+        status: "info",
+        colorScheme: "red",
+      }),
+      navigate("/"),
+    );
+  }
+
   if (board === null) {
     return <Spinner />;
   }
+
   return (
     <Box>
       <Box>{board.id}번 게시물</Box>
@@ -63,6 +77,12 @@ export function BoardView() {
           <FormLabel>작성일</FormLabel>
           <Input type={"datetime-local"} value={board.regDate} readOnly />
         </FormControl>
+      </Box>
+      <Box>
+        <Button colorScheme={"purple"}>수정</Button>
+        <Button colorScheme={"red"} onClick={handleClickRemove}>
+          삭제
+        </Button>
       </Box>
     </Box>
   );
