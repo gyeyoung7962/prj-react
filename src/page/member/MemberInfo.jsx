@@ -48,6 +48,7 @@ export function MemberInfo() {
   const navigate = useNavigate();
 
   function handleClickRemove() {
+    setIsLoading(true);
     axios
       .delete(`/api/member/${id}`, { data: { id, password } })
       .then(() => {
