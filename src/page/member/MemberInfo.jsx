@@ -15,6 +15,7 @@ export function MemberInfo() {
   const { id } = useParams();
   const [member, setMember] = useState(null);
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     axios
       .get(`/api/member/${id}`)
@@ -37,9 +38,31 @@ export function MemberInfo() {
 
   const navigate = useNavigate();
 
+  function handleClickRemove() {
+    axios
+      .delete(`/api/member/${id}`)
+      .then(() => {
+        toast({
+          status: "success",
+          description: "회원 탈퇴하였습니다",
+          position: "top",
+        });
+        navigate("/member/list");
+      })
+      .catch(
+        toast({
+          status: "warning",
+          description: "탈퇴 안됨",
+          position: "top",
+        }),
+      )
+      .finally(setIsLoading(true));
+  }
+
   if (member === null) {
     return <Spinner />;
   }
+
   return (
     <Box>
       <Box>회원 정보</Box>
@@ -64,7 +87,13 @@ export function MemberInfo() {
         </Box>
         <Box>
           <Button colorScheme={"purple"}>수정</Button>
-          <Button colorScheme={"red"}>취소</Button>
+          <Button
+            isLoading={isLoading}
+            colorScheme={"red"}
+            onClick={handleClickRemove}
+          >
+            탈퇴
+          </Button>
         </Box>
       </Box>
     </Box>
