@@ -4,7 +4,14 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -16,6 +23,7 @@ export function MemberInfo() {
   const [member, setMember] = useState(null);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onClose, onOpen } = useDisclosure();
   useEffect(() => {
     axios
       .get(`/api/member/${id}`)
@@ -49,13 +57,13 @@ export function MemberInfo() {
         });
         navigate("/member/list");
       })
-      .catch(
+      .catch(() => {
         toast({
           status: "warning",
           description: "탈퇴 안됨",
           position: "top",
-        }),
-      )
+        });
+      })
       .finally(setIsLoading(true));
   }
 
@@ -87,15 +95,28 @@ export function MemberInfo() {
         </Box>
         <Box>
           <Button colorScheme={"purple"}>수정</Button>
-          <Button
-            isLoading={isLoading}
-            colorScheme={"red"}
-            onClick={handleClickRemove}
-          >
+          <Button colorScheme={"red"} onClick={onOpen}>
             탈퇴
           </Button>
         </Box>
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader></ModalHeader>
+          <ModalBody>탈퇴하시겠습니까?</ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>취소</Button>
+            <Button
+              isLoading={isLoading}
+              colorScheme={"red"}
+              onClick={handleClickRemove}
+            >
+              확인
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
