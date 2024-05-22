@@ -65,7 +65,11 @@ export function MemberInfo() {
           position: "top",
         });
       })
-      .finally(setIsLoading(true));
+      .finally(() => {
+        setIsLoading(false);
+        setPassword("");
+        onClose();
+      });
   }
 
   if (member === null) {
