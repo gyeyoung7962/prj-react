@@ -37,14 +37,14 @@ export function MemberList() {
             </Tr>
           </Thead>
           <Tbody>
-            {memberList.map((member) => {
+            {memberList.map((member) => (
               <Tr key={member.id}>
                 <Td>{member.id}</Td>
                 <Td>{member.email}</Td>
                 <Td>{member.nickName}</Td>
-                <Td>{member.regDate}</Td>
-              </Tr>;
-            })}
+                <Td>{member.signupDateAndTime}</Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </Box>
