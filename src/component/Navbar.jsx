@@ -24,6 +24,17 @@ export function Navbar() {
       >
         글 쓰기
       </Box>
+
+      <Box
+        onClick={() => navigate("/member/list")}
+        cursor={"pointer"}
+        _hover={{
+          bgColor: "gray.200",
+        }}
+      >
+        회원 목록
+      </Box>
+
       <Box
         onClick={() => navigate("/signup")}
         cursor={"pointer"}
