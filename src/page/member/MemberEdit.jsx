@@ -84,7 +84,7 @@ export function MemberEdit() {
           <FormLabel>별명</FormLabel>
           <Input
             value={member.nickName}
-            onChange={(e) => setMember({ ...member, password: e.target.value })}
+            onChange={(e) => setMember({ ...member, nickName: e.target.value })}
           />
         </FormControl>
       </Box>
