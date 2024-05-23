@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Grid, GridItem } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
+import { LoginContext } from "./LoginProvider.jsx";
 
 export function Navbar() {
   const navigate = useNavigate();
+  const account = useContext(LoginContext);
   return (
     <Grid
       templateColumns="repeat(6, 1fr)"
@@ -63,7 +65,7 @@ export function Navbar() {
 
       <GridItem
         onClick={() => {
-          localStorage.removeItem("token");
+          account.logout();
           navigate("/login");
         }}
         cursor={"pointer"}
