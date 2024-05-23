@@ -58,32 +58,6 @@ export function MemberEdit() {
       .finally(() => {});
   }
 
-  if (member === null) {
-    return <Spinner />;
-  }
-
-  let isDisableNickNameCheck = false;
-  if (member.nickName === oldNickName) {
-    isDisableNickNameCheck = true;
-  }
-
-  if (member.nickName.length == 0) {
-    isDisableNickNameCheck = true;
-  }
-
-  let isDisableSaveButton = false;
-
-  if (member.password !== passwordCheck) {
-    isDisableSaveButton = true;
-  }
-  if (member.nickName.trim().length === 0) {
-    isDisableSaveButton = true;
-  }
-
-  if (!isCheckedNickName) {
-    isDisableSaveButton = true;
-  }
-
   function handleCheckNickName() {
     axios
       .get(`/api/member/check?nickName=${member.nickName}`)
@@ -106,6 +80,36 @@ export function MemberEdit() {
         }
       })
       .finally();
+  }
+
+  if (member === null) {
+    return <Spinner />;
+  }
+
+  let isDisableNickNameCheck = false;
+  if (member.nickName === oldNickName) {
+    isDisableNickNameCheck = true;
+  }
+
+  if (member.nickName.length == 0) {
+    isDisableNickNameCheck = true;
+  }
+
+  if (isCheckedNickName) {
+    isDisableNickNameCheck = true;
+  }
+
+  let isDisableSaveButton = false;
+
+  if (member.password !== passwordCheck) {
+    isDisableSaveButton = true;
+  }
+  if (member.nickName.trim().length === 0) {
+    isDisableSaveButton = true;
+  }
+
+  if (!isCheckedNickName) {
+    isDisableSaveButton = true;
   }
 
   return (
@@ -145,9 +149,11 @@ export function MemberEdit() {
           <FormControl>별명</FormControl>
           <InputGroup>
             <Input
-              onChange={(e) =>
-                setMember({ ...member, nickName: e.target.value.trim() })
-              }
+              onChange={(e) => {
+                const newNickName = e.target.value.trim();
+                setMember({ ...member, nickName: e.target.value.trim() });
+                setIsCheckedNickName(newNickName === oldNickName);
+              }}
               value={member.nickName}
             />
             <InputRightElement w={"75px"} mr={1}>
