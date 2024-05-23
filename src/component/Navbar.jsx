@@ -6,7 +6,7 @@ export function Navbar() {
   const navigate = useNavigate();
   return (
     <Grid
-      templateColumns="repeat(5, 1fr)"
+      templateColumns="repeat(6, 1fr)"
       h={"50px"}
       gap={4}
       bg={"blue.200"}
@@ -59,6 +59,19 @@ export function Navbar() {
         }}
       >
         로그인
+      </GridItem>
+
+      <GridItem
+        onClick={() => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }}
+        cursor={"pointer"}
+        _hover={{
+          bgColor: "gray.200",
+        }}
+      >
+        로그아웃
       </GridItem>
     </Grid>
   );
