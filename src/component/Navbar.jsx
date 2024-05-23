@@ -23,58 +23,67 @@ export function Navbar() {
       >
         Home
       </GridItem>
-      <GridItem
-        onClick={() => navigate("/write")}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        글 쓰기
-      </GridItem>
+      {account.isLoggedIn() && (
+        <GridItem
+          onClick={() => navigate("/write")}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          글 쓰기
+        </GridItem>
+      )}
+      {account.isLoggedIn() && (
+        <GridItem
+          onClick={() => navigate("/member/list")}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          회원 목록
+        </GridItem>
+      )}
 
-      <GridItem
-        onClick={() => navigate("/member/list")}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        회원 목록
-      </GridItem>
+      {account.isLoggedIn() || (
+        <GridItem
+          onClick={() => navigate("/signup")}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          회원가입
+        </GridItem>
+      )}
 
-      <GridItem
-        onClick={() => navigate("/signup")}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        회원가입
-      </GridItem>
+      {account.isLoggedIn() || (
+        <GridItem
+          onClick={() => navigate("/login")}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          로그인
+        </GridItem>
+      )}
 
-      <GridItem
-        onClick={() => navigate("/login")}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        로그인
-      </GridItem>
-
-      <GridItem
-        onClick={() => {
-          account.logout();
-          navigate("/login");
-        }}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        로그아웃
-      </GridItem>
+      {account.isLoggedIn() && (
+        <GridItem
+          onClick={() => {
+            account.logout();
+            navigate("/login");
+          }}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          로그아웃
+        </GridItem>
+      )}
     </Grid>
   );
 }
