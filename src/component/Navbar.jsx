@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { Grid, GridItem } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -42,10 +44,21 @@ export function Navbar() {
             bgColor: "gray.200",
           }}
         >
+          <FontAwesomeIcon icon={faUser} />
+          {account.nickName}
+        </GridItem>
+      )}
+      {account.isLoggedIn() && (
+        <GridItem
+          onClick={() => navigate("/member/list")}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
           회원 목록
         </GridItem>
       )}
-
       {account.isLoggedIn() || (
         <GridItem
           onClick={() => navigate("/signup")}
@@ -57,7 +70,6 @@ export function Navbar() {
           회원가입
         </GridItem>
       )}
-
       {account.isLoggedIn() || (
         <GridItem
           onClick={() => navigate("/login")}
@@ -69,7 +81,6 @@ export function Navbar() {
           로그인
         </GridItem>
       )}
-
       {account.isLoggedIn() && (
         <GridItem
           onClick={() => {
