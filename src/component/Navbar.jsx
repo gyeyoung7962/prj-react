@@ -1,12 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Flex } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
 
 export function Navbar() {
   const navigate = useNavigate();
   return (
-    <Flex gap={3}>
-      <Box
+    <Grid
+      templateColumns="repeat(5, 1fr)"
+      h={"50px"}
+      gap={4}
+      bg={"blue.200"}
+      style={{ textAlign: "center", alignItems: "center" }}
+    >
+      <GridItem
         onClick={() => navigate("/")}
         cursor={"pointer"}
         _hover={{
@@ -14,8 +20,8 @@ export function Navbar() {
         }}
       >
         Home
-      </Box>
-      <Box
+      </GridItem>
+      <GridItem
         onClick={() => navigate("/write")}
         cursor={"pointer"}
         _hover={{
@@ -23,9 +29,9 @@ export function Navbar() {
         }}
       >
         글 쓰기
-      </Box>
+      </GridItem>
 
-      <Box
+      <GridItem
         onClick={() => navigate("/member/list")}
         cursor={"pointer"}
         _hover={{
@@ -33,9 +39,9 @@ export function Navbar() {
         }}
       >
         회원 목록
-      </Box>
+      </GridItem>
 
-      <Box
+      <GridItem
         onClick={() => navigate("/signup")}
         cursor={"pointer"}
         _hover={{
@@ -43,9 +49,9 @@ export function Navbar() {
         }}
       >
         회원가입
-      </Box>
+      </GridItem>
 
-      <Box
+      <GridItem
         onClick={() => navigate("/login")}
         cursor={"pointer"}
         _hover={{
@@ -53,7 +59,7 @@ export function Navbar() {
         }}
       >
         로그인
-      </Box>
-    </Flex>
+      </GridItem>
+    </Grid>
   );
 }
