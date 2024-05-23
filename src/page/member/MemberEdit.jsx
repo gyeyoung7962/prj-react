@@ -63,7 +63,7 @@ export function MemberEdit() {
   }
 
   let isDisableNickNameCheck = false;
-  if (member.nickName !== oldNickName) {
+  if (member.nickName === oldNickName) {
     isDisableNickNameCheck = true;
   }
 
@@ -77,6 +77,10 @@ export function MemberEdit() {
     isDisableSaveButton = true;
   }
   if (member.nickName.trim().length === 0) {
+    isDisableSaveButton = true;
+  }
+
+  if (!isCheckedNickName) {
     isDisableSaveButton = true;
   }
 
