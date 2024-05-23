@@ -36,6 +36,19 @@ export function Navbar() {
           글 쓰기
         </GridItem>
       )}
+
+      {account.isLoggedIn() && (
+        <GridItem
+          onClick={() => navigate("/member/list")}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          회원 목록
+        </GridItem>
+      )}
+
       {account.isLoggedIn() && (
         <GridItem
           onClick={() => navigate("/member/list")}
@@ -48,17 +61,7 @@ export function Navbar() {
           {account.nickName}
         </GridItem>
       )}
-      {account.isLoggedIn() && (
-        <GridItem
-          onClick={() => navigate("/member/list")}
-          cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
-        >
-          회원 목록
-        </GridItem>
-      )}
+
       {account.isLoggedIn() || (
         <GridItem
           onClick={() => navigate("/signup")}
