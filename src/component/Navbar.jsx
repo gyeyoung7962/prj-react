@@ -51,7 +51,7 @@ export function Navbar() {
 
       {account.isLoggedIn() && (
         <GridItem
-          onClick={() => navigate("/member/list")}
+          onClick={() => navigate(`/member/${account.id}`)}
           cursor={"pointer"}
           _hover={{
             bgColor: "gray.200",
