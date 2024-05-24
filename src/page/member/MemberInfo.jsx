@@ -29,7 +29,11 @@ export function MemberInfo() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   useEffect(() => {
     axios
-      .get(`/api/member/${id}`)
+      .get(`/api/member/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((res) => {
         setMember(res.data);
         toast({});
