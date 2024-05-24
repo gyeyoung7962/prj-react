@@ -47,6 +47,13 @@ export function MemberInfo() {
             status: "error",
           });
           navigate("/member/list");
+        } else if (err.response.status === 403) {
+          toast({
+            description: "권한이 없습니다",
+            position: "top",
+            status: "error",
+          });
+          navigate(-1);
         }
       })
       .finally();
