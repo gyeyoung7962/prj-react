@@ -17,9 +17,10 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { LoginContext } from "../../component/LoginProvider.jsx";
 
 export function MemberEdit() {
   const [member, setMember] = useState(null);
@@ -28,6 +29,7 @@ export function MemberEdit() {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
+  const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -56,9 +58,10 @@ export function MemberEdit() {
       .then((res) => {
         toast({
           status: "success",
-          description: "회원정보가 수정되었습니다",
+          description: "회원 정보가 수정되었습니다.",
           position: "top",
         });
+        account.login(res.data.token);
         navigate(`/member/${id}`);
       })
       .catch(() => {
