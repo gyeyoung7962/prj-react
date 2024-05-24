@@ -37,7 +37,7 @@ export function Navbar() {
         </GridItem>
       )}
 
-      {account.isLoggedIn() && (
+      {account.isAdmin() && (
         <GridItem
           onClick={() => navigate("/member/list")}
           cursor={"pointer"}
