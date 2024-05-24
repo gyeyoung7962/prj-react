@@ -30,6 +30,7 @@ export function MemberInfo() {
   useEffect(() => {
     axios
       .get(`/api/member/${id}`, {
+        //자신의 정보만 볼수있게 토큰넘김
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
