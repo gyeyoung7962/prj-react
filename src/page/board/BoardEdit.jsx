@@ -32,13 +32,18 @@ export function BoardEdit() {
 
   function handleClickSave() {
     axios
-      .put(`/api/board/edit`, board)
+      .put(`/api/board/edit`, board, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then(
-        toast({
-          status: "success",
-          description: "수정완료하였습니다",
-          position: "top",
-        }),
+        () =>
+          toast({
+            status: "success",
+            description: "수정완료하였습니다",
+            position: "top",
+          }),
         navigate(`/board/${id}`),
       )
       .catch((error) => {
