@@ -19,7 +19,7 @@ import {
   faAnglesLeft,
   faAnglesRight,
   faMagnifyingGlass,
-  faUser,
+  faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -31,20 +31,24 @@ export function BoardList() {
   const [searchType, setSearchType] = useState("all");
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     axios.get(`/api/board/list?${searchParams}`).then((res) => {
       setBoardList(res.data.boardList);
       setPageInfo(res.data.pageInfo);
     });
-    const typeParam = searchParams.get("searchType");
-    const keywordParam = searchParams.get("searchKeyword");
+
+    setSearchType("all");
+    setSearchKeyword("");
+
+    const typeParam = searchParams.get("type");
+    const keywordParam = searchParams.get("keyword");
     if (typeParam) {
-      setSearchParams(typeParam);
+      setSearchType(typeParam);
     }
     if (keywordParam) {
-      setSearchParams(keywordParam);
+      setSearchKeyword(keywordParam);
     }
   }, [searchParams]);
 
@@ -66,7 +70,7 @@ export function BoardList() {
     <Box>
       <Box>게시물 목록</Box>
       <Box>
-        {boardList.length === 0 && <Center>조회 결과가 없습니다</Center>}
+        {boardList.length === 0 && <Center>조회 결과가 없습니다.</Center>}
         {boardList.length > 0 && (
           <Table>
             <Thead>
@@ -74,7 +78,7 @@ export function BoardList() {
                 <Th>#</Th>
                 <Th>TITLE</Th>
                 <Th>
-                  <FontAwesomeIcon icon={faUser} />
+                  <FontAwesomeIcon icon={faUserPen} />
                 </Th>
               </Tr>
             </Thead>
@@ -84,9 +88,9 @@ export function BoardList() {
                   _hover={{
                     bgColor: "gray.200",
                   }}
+                  cursor={"pointer"}
                   onClick={() => navigate(`/board/${board.id}`)}
                   key={board.id}
-                  style={{ cursor: "pointer" }}
                 >
                   <Td>{board.id}</Td>
                   <Td>{board.title}</Td>
@@ -104,16 +108,16 @@ export function BoardList() {
               value={searchType}
               onChange={(e) => setSearchType(e.target.value)}
             >
-              <option value={"all"}>전체</option>
-              <option value={"text"}>글</option>
-              <option value={"nickName"}>작성자</option>
+              <option value="all">전체</option>
+              <option value="text">글</option>
+              <option value="nickName">작성자</option>
             </Select>
           </Box>
           <Box>
             <Input
               value={searchKeyword}
-              placeholder={"검색어"}
               onChange={(e) => setSearchKeyword(e.target.value)}
+              placeholder="검색어"
             />
           </Box>
           <Box>
@@ -124,48 +128,43 @@ export function BoardList() {
         </Flex>
       </Center>
       <Center>
-        <Box>
-          {pageInfo.prevPageNumber && (
-            <>
-              <Button onClick={() => handlePageButtonClick(1)}>
-                <FontAwesomeIcon icon={faAnglesLeft} />
-              </Button>
-
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </Button>
-            </>
-          )}
-
-          {pageNumbers.map((pageNumber) => (
-            <Button
-              onClick={() => handlePageButtonClick(pageNumber)}
-              key={pageNumber}
-              colorScheme={
-                pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
-              }
-            >
-              {pageNumber}
+        {pageInfo.prevPageNumber && (
+          <>
+            <Button onClick={() => handlePageButtonClick(1)}>
+              <FontAwesomeIcon icon={faAnglesLeft} />
             </Button>
-          ))}
-
-          {pageInfo.nextPageNumber && (
-            <>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </Button>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAnglesRight} />
-              </Button>
-            </>
-          )}
-        </Box>
+            <Button
+              onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
+            >
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </Button>
+          </>
+        )}
+        {pageNumbers.map((pageNumber) => (
+          <Button
+            onClick={() => handlePageButtonClick(pageNumber)}
+            key={pageNumber}
+            colorScheme={
+              pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
+            }
+          >
+            {pageNumber}
+          </Button>
+        ))}
+        {pageInfo.nextPageNumber && (
+          <>
+            <Button
+              onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
+            </Button>
+            <Button
+              onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
+            >
+              <FontAwesomeIcon icon={faAnglesRight} />
+            </Button>
+          </>
+        )}
       </Center>
     </Box>
   );
