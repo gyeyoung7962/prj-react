@@ -1,4 +1,14 @@
-import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import {
   faAngleLeft,
@@ -60,48 +70,50 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
-      <Box>
-        {pageInfo.prevPageNumber && (
-          <>
-            <Button onClick={() => navigate(`/?page=1`)}>
-              <FontAwesomeIcon icon={faAnglesLeft} />
-            </Button>
+      <Center>
+        <Box>
+          {pageInfo.prevPageNumber && (
+            <>
+              <Button onClick={() => navigate(`/?page=1`)}>
+                <FontAwesomeIcon icon={faAnglesLeft} />
+              </Button>
 
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAngleLeft} />
-            </Button>
-          </>
-        )}
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAngleLeft} />
+              </Button>
+            </>
+          )}
 
-        {pageNumbers.map((pageNumber) => (
-          <Button
-            onClick={() => navigate(`/?page=${pageNumber}`)}
-            key={pageNumber}
-            colorScheme={
-              pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
-            }
-          >
-            {pageNumber}
-          </Button>
-        ))}
+          {pageNumbers.map((pageNumber) => (
+            <Button
+              onClick={() => navigate(`/?page=${pageNumber}`)}
+              key={pageNumber}
+              colorScheme={
+                pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
+              }
+            >
+              {pageNumber}
+            </Button>
+          ))}
 
-        {pageInfo.nextPageNumber && (
-          <>
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAngleRight} />
-            </Button>
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAnglesRight} />
-            </Button>
-          </>
-        )}
-      </Box>
+          {pageInfo.nextPageNumber && (
+            <>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAngleRight} />
+              </Button>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAnglesRight} />
+              </Button>
+            </>
+          )}
+        </Box>
+      </Center>
     </Box>
   );
 }
