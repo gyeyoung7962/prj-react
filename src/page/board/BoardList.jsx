@@ -2,6 +2,9 @@ import {
   Box,
   Button,
   Center,
+  Flex,
+  Input,
+  Select,
   Table,
   Tbody,
   Td,
@@ -15,6 +18,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faMagnifyingGlass,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,9 +27,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState([]);
+  const [pageInfo, setPageInfo] = useState({});
+  const [searchType, setSearchType] = useState("all");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pageInfo, setPageInfo] = useState({});
 
   useEffect(() => {
     axios.get(`/api/board/list?${searchParams}`).then((res) => {
@@ -38,6 +44,11 @@ export function BoardList() {
   for (let i = pageInfo.leftPageNumber; i <= pageInfo.rightPageNumber; i++) {
     pageNumbers.push(i);
   }
+
+  function handleSearchClick() {
+    navigate(`/?type=${searchType}&keyword=${searchKeyword}`);
+  }
+
   return (
     <Box>
       <Box>게시물 목록</Box>
@@ -70,6 +81,28 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
+      <Center>
+        <Flex>
+          <Box>
+            <Select onChange={(e) => setSearchType(e.target.value)}>
+              <option value={"all"}>전체</option>
+              <option value={"text"}>글</option>
+              <option value={"nickName"}>작성자</option>
+            </Select>
+          </Box>
+          <Box>
+            <Input
+              placeholder={"검색어"}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Button onClick={handleSearchClick}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </Button>
+          </Box>
+        </Flex>
+      </Center>
       <Center>
         <Box>
           {pageInfo.prevPageNumber && (
