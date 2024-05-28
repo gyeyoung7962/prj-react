@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   Image,
@@ -12,6 +13,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Switch,
+  Text,
   Textarea,
   useDisclosure,
   useToast,
@@ -19,10 +22,13 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export function BoardEdit() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+  const [removeFileList, setRemoveFileList] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -31,6 +37,7 @@ export function BoardEdit() {
     axios.get(`/api/board/${id}`).then((res) => setBoard(res.data));
   }, []);
 
+  console.log(removeFileList);
   function handleClickSave() {
     axios
       .put(`/api/board/edit`, board, {
@@ -64,6 +71,15 @@ export function BoardEdit() {
   if (board === null) {
     return <Spinner />;
   }
+
+  function handleRemoveSwitchChange(name, checked) {
+    if (checked) {
+      setRemoveFileList([...removeFileList, name]);
+    } else {
+      removeFileList.filter((item) => item !== name);
+    }
+  }
+
   return (
     <Box>
       <Box>{id}번 게시물 수정</Box>
@@ -90,8 +106,20 @@ export function BoardEdit() {
       <Box>
         {board.files &&
           board.files.map((file) => (
-            <Box border={"2px solid black"} m={3} key={file.src}>
-              <Image src={file.src} />
+            <Box border={"2px solid black"} m={3} key={file.name}>
+              <Flex>
+                <FontAwesomeIcon icon={faTrashCan} />
+                <Switch
+                  onChange={(e) =>
+                    handleRemoveSwitchChange(file.name, e.target.checked)
+                  }
+                />
+                <Text>{file.name}</Text>
+              </Flex>
+
+              <Box>
+                <Image src={file.src} />
+              </Box>
             </Box>
           ))}
       </Box>
