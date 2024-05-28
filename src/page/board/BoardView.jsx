@@ -94,10 +94,10 @@ export function BoardView() {
       </Box>
 
       <Box>
-        {board.imageSrcList &&
-          board.imageSrcList.map((src) => (
-            <Box border={"2px solid black"} m={3} key={src}>
-              <Image src={src} />
+        {board.files &&
+          board.files.map((file) => (
+            <Box border={"2px solid black"} m={3} key={file.src}>
+              <Image src={file.src} />
             </Box>
           ))}
       </Box>
