@@ -15,8 +15,8 @@ import { LoginContext } from "../../component/LoginProvider.jsx";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
   const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
@@ -24,18 +24,11 @@ export function BoardWrite() {
   function handleSaveClick() {
     setLoading(true);
     axios
-      .post(
-        "/api/board/add",
-        {
-          title,
-          content,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        },
-      )
+      .postForm("/api/board/add", {
+        title,
+        content,
+        files,
+      })
       .then(() => {
         toast({
           description: "새 글이 등록되었습니다.",
@@ -66,9 +59,8 @@ export function BoardWrite() {
     disableSaveButton = true;
   }
 
-  //file 목록 작성
+  // file 목록 작성
   const fileNameList = [];
-
   for (let i = 0; i < files.length; i++) {
     fileNameList.push(<li>{files[i].name}</li>);
   }
@@ -94,22 +86,20 @@ export function BoardWrite() {
             <FormLabel>파일</FormLabel>
             <Input
               multiple
-              type={"file"}
-              accept={"img/*"}
-              onChange={(e) => {
-                setFiles(e.target.files);
-              }}
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFiles(e.target.files)}
             />
           </FormControl>
+        </Box>
+        <Box>
+          <ul>{fileNameList}</ul>
         </Box>
         <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input readOnly value={account.nickName} />
           </FormControl>
-        </Box>
-        <Box>
-          <ul>{fileNameList}</ul>
         </Box>
         <Box>
           <Button
