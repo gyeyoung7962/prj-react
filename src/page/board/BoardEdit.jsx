@@ -76,7 +76,7 @@ export function BoardEdit() {
     if (checked) {
       setRemoveFileList([...removeFileList, name]);
     } else {
-      removeFileList.filter((item) => item !== name);
+      setRemoveFileList(removeFileList.filter((item) => item !== name));
     }
   }
 
@@ -104,8 +104,8 @@ export function BoardEdit() {
       </Box>
 
       <Box>
-        {board.files &&
-          board.files.map((file) => (
+        {board.fileList &&
+          board.fileList.map((file) => (
             <Box border={"2px solid black"} m={3} key={file.name}>
               <Flex>
                 <FontAwesomeIcon icon={faTrashCan} />
@@ -116,6 +116,17 @@ export function BoardEdit() {
                 />
                 <Text>{file.name}</Text>
               </Flex>
+
+              <Box>
+                <Image
+                  sx={
+                    removeFileList.includes(file.name)
+                      ? { filter: "blur(8px)" }
+                      : {}
+                  }
+                  src={file.src}
+                />
+              </Box>
 
               <Box>
                 <Image src={file.src} />
