@@ -30,7 +30,10 @@ import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState({
+    like: false,
+    count: 0,
+  });
   const toast = useToast();
   const navigate = useNavigate();
   const account = useContext(LoginContext);
@@ -88,10 +91,15 @@ export function BoardView() {
       <Flex>
         <Heading>{board.id}번 게시물</Heading>
         <Spacer />
-        <Box onClick={() => setLike(!like)} cursor={"pointer"} fontSize={"3xl"}>
-          {like && <FontAwesomeIcon icon={fullHeart} />}
-          {like || <FontAwesomeIcon icon={emptyHeart} />}
+        <Box
+          onClick={() => setLike({ ...like, like: !like.like })}
+          cursor={"pointer"}
+          fontSize={"3xl"}
+        >
+          {like.like && <FontAwesomeIcon icon={fullHeart} />}
+          {like.like || <FontAwesomeIcon icon={emptyHeart} />}
         </Box>
+        <Box fontSize={"3xl"}>{like.count}</Box>
       </Flex>
       <Box>
         <FormControl>
