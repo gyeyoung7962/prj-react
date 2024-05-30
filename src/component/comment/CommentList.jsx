@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Alert, AlertIcon, Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import { CommentItem } from "./CommentItem.jsx";
 
 export function CommentList({ boardId, isSending }) {
   const [commentList, setCommentList] = useState([]);
@@ -22,17 +23,7 @@ export function CommentList({ boardId, isSending }) {
   return (
     <Box>
       {commentList.map((comment) => (
-        <Box key={comment.id} border={"1px solid black"} my={3}>
-          <Flex>
-            <Alert status="success">
-              <AlertIcon />
-              {comment.comment}
-            </Alert>
-            <Box>
-              {comment.writer}|| || {comment.regDate}
-            </Box>
-          </Flex>
-        </Box>
+        <CommentItem comment={comment} key={comment.id} />
       ))}
     </Box>
   );
