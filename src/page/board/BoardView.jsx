@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -24,9 +24,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { LoginContext } from "../../component/LoginProvider.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as fullHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CommentComponent } from "../../component/comment/CommentComponent.jsx";
 
 export function BoardView() {
