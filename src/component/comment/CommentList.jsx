@@ -29,7 +29,7 @@ export function CommentList({ boardId, isSending }) {
               {comment.comment}
             </Alert>
             <Box>
-              {comment.memberId} || {comment.regDate}
+              {comment.writer}|| || {comment.regDate}
             </Box>
           </Flex>
         </Box>
