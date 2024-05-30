@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Flex, Spacer } from "@chakra-ui/react";
+import { Alert, AlertIcon, Box, Flex } from "@chakra-ui/react";
 
 export function CommentList({ boardId, isSending }) {
   const [commentList, setCommentList] = useState([]);
@@ -18,15 +18,19 @@ export function CommentList({ boardId, isSending }) {
   if (commentList.length === 0) {
     return <Box>댓글이 없습니다. 첫 댓글을 작성해보세요</Box>;
   }
+
   return (
     <Box>
       {commentList.map((comment) => (
         <Box key={comment.id} border={"1px solid black"} my={3}>
           <Flex>
-            <Box>{comment.memberId}</Box>
-            <Spacer />
-            <Box>{comment.regDate}</Box>
-            <Box>{comment.comment}</Box>
+            <Alert status="success">
+              <AlertIcon />
+              {comment.comment}
+            </Alert>
+            <Box>
+              {comment.memberId} || {comment.regDate}
+            </Box>
           </Flex>
         </Box>
       ))}
