@@ -32,14 +32,16 @@ import { CommentComponent } from "../../component/comment/CommentComponent.jsx";
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+
   const [like, setLike] = useState({
     like: false,
     count: 0,
   });
+
   const [isLikeProcessing, setIsLikeProcessing] = useState(false);
+  const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
-  const account = useContext(LoginContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
@@ -53,9 +55,10 @@ export function BoardView() {
         if (err.response.status === 404) {
           toast({
             status: "info",
-            description: "해당 게시물이 존재하지 않습니다",
+            description: "해당 게시물이 존재하지 않습니다.",
             position: "top",
           });
+          navigate("/");
         }
       });
   }, []);
@@ -67,22 +70,21 @@ export function BoardView() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then(
-        () =>
-          toast({
-            description: "삭제완료",
-            position: "top",
-            status: "success",
-          }),
-        navigate("/"),
-      )
-      .catch(() =>
+      .then(() => {
+        toast({
+          status: "success",
+          description: `${id}번 게시물이 삭제되었습니다.`,
+          position: "top",
+        });
+        navigate("/");
+      })
+      .catch(() => {
         toast({
           status: "error",
-          description: `${id}번 게시물 삭제중 오류가 발생하였습니다`,
+          description: `${id}번 게시물 삭제 중 오류가 발생하였습니다.`,
           position: "top",
-        }),
-      )
+        });
+      })
       .finally(() => {
         onClose();
       });
@@ -118,7 +120,7 @@ export function BoardView() {
             <Tooltip
               isDisabled={account.isLoggedIn()}
               hasArrow
-              label={"로그인 해주세요"}
+              label="로그인 해주세요."
             >
               <Box onClick={handleClickLike} cursor="pointer" fontSize="3xl">
                 {like.like && <FontAwesomeIcon icon={fullHeart} />}
@@ -140,35 +142,29 @@ export function BoardView() {
           <Input value={board.title} readOnly />
         </FormControl>
       </Box>
-
       <Box>
         <FormControl>
           <FormLabel>본문</FormLabel>
           <Textarea value={board.content} readOnly />
         </FormControl>
       </Box>
-
       <Box>
         {board.fileList &&
           board.fileList.map((file) => (
-            <Box border={"2px solid black"} m={3} key={file.src}>
+            <Box border={"2px solid black"} m={3} key={file.name}>
               <Image src={file.src} />
             </Box>
           ))}
       </Box>
-
       <Box>
         <FormControl>
           <FormLabel>작성자</FormLabel>
           <Input value={board.writer} readOnly />
         </FormControl>
       </Box>
-
       <Box>
-        <FormControl>
-          <FormLabel>작성일</FormLabel>
-          <Input type={"datetime-local"} value={board.regDate} readOnly />
-        </FormControl>
+        <FormControl>작성일시</FormControl>
+        <Input type={"datetime-local"} value={board.regDate} readOnly />
       </Box>
       {account.hasAccess(board.memberId) && (
         <Box>
@@ -183,17 +179,19 @@ export function BoardView() {
           </Button>
         </Box>
       )}
+
       <CommentComponent boardId={board.id} />
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader></ModalHeader>
-          <ModalBody>삭제 하시겠습니까?</ModalBody>
+          <ModalBody>삭제하시겠습니까?</ModalBody>
           <ModalFooter>
+            <Button onClick={onClose}>취소</Button>
             <Button colorScheme={"red"} onClick={handleClickRemove}>
               확인
             </Button>
-            <Button onClick={onClose}>취소</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
