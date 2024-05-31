@@ -15,7 +15,7 @@ export function Home() {
       <Box
         mx={{
           base: 0,
-          lg: 200,
+          lg: 300,
         }}
         my={{
           base: 0,

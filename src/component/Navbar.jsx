@@ -17,7 +17,7 @@ export function Navbar() {
       }}
       gap={3}
       height={20}
-      bgColor="gray.100"
+      bgColor="whitesmoke.200"
     >
       <Center
         onClick={() => navigate("/")}

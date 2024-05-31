@@ -177,6 +177,7 @@ export function BoardView() {
       {account.hasAccess(board.memberId) && (
         <Box mb={7}>
           <Button
+            mr={2}
             colorScheme={"purple"}
             onClick={() => navigate(`/edit/${board.id}`)}
           >

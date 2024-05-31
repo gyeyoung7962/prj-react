@@ -4,7 +4,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Center,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -80,78 +79,66 @@ export function BoardWrite() {
   }
 
   return (
-    <Center>
-      <Box
-        mx={{
-          base: 0,
-          lg: 0,
-        }}
-        my={{
-          base: 0,
-          lg: 0,
-        }}
-        mb={10}
-      >
-        <Box>
-          <Heading>새 글 작성</Heading>
+    <Box>
+      <Box>
+        <Heading>새 글 작성</Heading>
+      </Box>
+      <Box>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>제목</FormLabel>
+            <Input onChange={(e) => setTitle(e.target.value)} />
+          </FormControl>
         </Box>
-        <Box>
-          <Box mb={7}>
-            <FormControl>
-              <FormLabel>제목</FormLabel>
-              <Input onChange={(e) => setTitle(e.target.value)} />
-            </FormControl>
-          </Box>
-          <Box mb={7}>
-            <FormControl>
-              <FormLabel>본문</FormLabel>
-              <Textarea onChange={(e) => setContent(e.target.value)} />
-            </FormControl>
-          </Box>
-          <Box mb={7}>
-            <FormControl>
-              <FormLabel>파일</FormLabel>
-              <Input
-                multiple
-                type="file"
-                accept="image/*"
-                onChange={(e) => setFiles(e.target.files)}
-              />
-              <FormHelperText>
-                총 용량은 10MB, 한 파일은 1MB를 초과할 수 없습니다
-              </FormHelperText>
-            </FormControl>
-          </Box>
-          <Box mb={7}>
-            <Card>
-              <CardHeader>
-                <Heading size={"md"}>선택된 파일 목록</Heading>
-              </CardHeader>
-              <CardBody>
-                <Stack divider={<StackDivider />}>
-                  <ul>{fileNameList}</ul>
-                </Stack>
-              </CardBody>
-            </Card>
-          </Box>
-          <Box mb={7}>
-            <FormControl>
-              <FormLabel>작성자</FormLabel>
-              <Input readOnly value={account.nickName} />
-            </FormControl>
-          </Box>
-          <Box mb={7}>
-            <Button
-              isLoading={loading}
-              isDisabled={disableSaveButton}
-              colorScheme={"blue"}
-              onClick={handleSaveClick}
-            >
-              저장
-            </Button>
-          </Box>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>본문</FormLabel>
+            <Textarea onChange={(e) => setContent(e.target.value)} />
+          </FormControl>
+        </Box>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>파일</FormLabel>
+            <Input
+              multiple
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFiles(e.target.files)}
+            />
+            <FormHelperText>
+              총 용량은 10MB, 한 파일은 1MB를 초과할 수 없습니다
+            </FormHelperText>
+          </FormControl>
+        </Box>
+        <Box mb={7}>
+          <Card>
+            <CardHeader>
+              <Heading size={"md"}>선택된 파일 목록</Heading>
+            </CardHeader>
+            <CardBody>
+              <Stack divider={<StackDivider />}>
+                <ul>{fileNameList}</ul>
+              </Stack>
+            </CardBody>
+          </Card>
+        </Box>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>작성자</FormLabel>
+            <Input readOnly value={account.nickName} />
+          </FormControl>
+        </Box>
+        <Box mb={7}>
+          <Button
+            isLoading={loading}
+            isDisabled={disableSaveButton}
+            colorScheme={"blue"}
+            onClick={handleSaveClick}
+          >
+            저장
+          </Button>
         </Box>
       </Box>
-    </Center>
+    </Box>
   );
 }

@@ -127,7 +127,7 @@ export function BoardList() {
       </Box>
       <Center mb={10}>
         <Flex gab={1}>
-          <Box>
+          <Box mr={2}>
             <Select
               value={searchType}
               onChange={(e) => setSearchType(e.target.value)}
@@ -137,7 +137,7 @@ export function BoardList() {
               <option value="nickName">작성자</option>
             </Select>
           </Box>
-          <Box>
+          <Box mr={2}>
             <Input
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
