@@ -54,7 +54,7 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
           {comment.writer}|| || {comment.regDate}
         </Box>
       </Flex>
-      {account.nickName == comment.writer && (
+      {account.hasAccess(comment.memberId) && (
         <Flex>
           <Box>
             <Button isLoading={isProcessing} colorScheme="red" onClick={onOpen}>
@@ -63,7 +63,7 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
           </Box>
         </Flex>
       )}
-      {account.nickName == comment.writer && (
+      {account.hasAccess(comment.memberId) && (
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
