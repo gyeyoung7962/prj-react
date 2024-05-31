@@ -6,16 +6,13 @@ import { Navbar } from "../component/Navbar.jsx";
 export function Home() {
   return (
     <Box>
-      <Box>
-        <Navbar />
-      </Box>
+      <Navbar />
       <Box
-      // style={{
-      //   position: "absolute",
-      //   top: "50%",
-      //   left: "50%",
-      //   transform: "translate(-50%,-50%)",
-      // }}
+        mx={{
+          base: 0,
+          lg: 200,
+        }}
+        mt={20}
       >
         <Outlet />
       </Box>

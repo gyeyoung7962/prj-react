@@ -11,11 +11,11 @@ export function Navbar() {
 
   return (
     <Grid
-      templateColumns="repeat(6, 1fr)"
+      templateColumns="repeat(5, 1fr)"
       h={"50px"}
       gap={4}
       bg={"blue.200"}
-      style={{ textAlign: "center", alignItems: "center" }}
+      style={{ textAlign: "center", alignItems: "center", margin: "0 auto" }}
     >
       <GridItem
         onClick={() => navigate("/")}
