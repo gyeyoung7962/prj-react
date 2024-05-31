@@ -46,8 +46,9 @@ export function CommentEdit({
       })
       .catch(() => {})
       .finally(() => {
+        // setIsEditing(false);
         setIsProcessing(false);
-
+        setCommentText("");
         onClose();
       });
   }
