@@ -5,11 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
   faRightFromBracket,
-  faUser,
   faUserPen,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import { Box, Center, Flex, Hide, Show, Spacer } from "@chakra-ui/react";
+import {
+  Avatar,
+  AvatarBadge,
+  Box,
+  Center,
+  Flex,
+  Hide,
+  Show,
+  Spacer,
+  Stack,
+} from "@chakra-ui/react";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -70,9 +79,11 @@ export function Navbar() {
           fontWeight={600}
         >
           <Flex gap={2}>
-            <Box>
-              <FontAwesomeIcon icon={faUser} />
-            </Box>
+            <Stack direction="row" spacing={4}>
+              <Avatar>
+                <AvatarBadge boxSize="1.25em" bg="green.500" />
+              </Avatar>
+            </Stack>
             <Box>{account.nickName}</Box>
           </Flex>
         </Center>
@@ -147,99 +158,5 @@ export function Navbar() {
         </Center>
       )}
     </Flex>
-
-    /*
-    <Grid
-      templateColumns="repeat(5, 1fr)"
-      h={"50px"}
-      gap={4}
-      bg={"blue.200"}
-      style={{ textAlign: "center", alignItems: "center", margin: "0 auto" }}
-    >
-      <GridItem
-        onClick={() => navigate("/")}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        Home
-      </GridItem>
-      {account.isLoggedIn() && (
-        <GridItem
-          onClick={() => navigate("/write")}
-          cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
-        >
-          글 쓰기
-        </GridItem>
-      )}
-
-      {account.isAdmin() && (
-        <GridItem
-          onClick={() => navigate("/member/list")}
-          cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
-        >
-          회원 목록
-        </GridItem>
-      )}
-
-      {account.isLoggedIn() && (
-        <GridItem
-          onClick={() => navigate(`/member/${account.id}`)}
-          cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
-        >
-          <FontAwesomeIcon icon={faUser} />
-          {account.nickName}
-        </GridItem>
-      )}
-
-      {account.isLoggedIn() || (
-        <GridItem
-          onClick={() => navigate("/signup")}
-          cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
-        >
-          회원가입
-        </GridItem>
-      )}
-      {account.isLoggedIn() || (
-        <GridItem
-          onClick={() => navigate("/login")}
-          cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
-        >
-          로그인
-        </GridItem>
-      )}
-      {account.isLoggedIn() && (
-        <GridItem
-          onClick={() => {
-            account.logout();
-            navigate("/login");
-          }}
-          cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
-        >
-          로그아웃
-        </GridItem>
-      )}
-    </Grid>
-
-     */
   );
 }
