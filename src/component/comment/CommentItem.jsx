@@ -57,6 +57,7 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
           {comment.writer}|| || {comment.regDate}
         </Box>
       </Flex>
+
       {account.hasAccess(comment.memberId) && (
         <Flex>
           <Box>
@@ -69,6 +70,7 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
           </Box>
         </Flex>
       )}
+
       {isEditing && (
         <CommentEdit
           comment={comment}
