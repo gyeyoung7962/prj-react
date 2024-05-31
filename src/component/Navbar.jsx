@@ -2,8 +2,14 @@ import { useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Center, Flex, Spacer } from "@chakra-ui/react";
+import {
+  faHouse,
+  faRightFromBracket,
+  faUser,
+  faUserPen,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
+import { Box, Center, Flex, Hide, Show, Spacer } from "@chakra-ui/react";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -29,7 +35,10 @@ export function Navbar() {
         fontSize={20}
         fontWeight={600}
       >
-        HOME
+        <Show below={"lg"}>
+          <FontAwesomeIcon icon={faHouse} />
+        </Show>
+        <Hide below={"lg"}>HOME</Hide>
       </Center>
       {account.isLoggedIn() && (
         <Center
@@ -42,7 +51,10 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          글쓰기
+          <Show below={"lg"}>
+            <FontAwesomeIcon icon={faUserPen} />
+          </Show>
+          <Hide below={"lg"}>글쓰기</Hide>
         </Center>
       )}
       <Spacer />
@@ -57,8 +69,12 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          <FontAwesomeIcon icon={faUser} />
-          {account.nickName}
+          <Flex gap={2}>
+            <Box>
+              <FontAwesomeIcon icon={faUser} />
+            </Box>
+            <Box>{account.nickName}</Box>
+          </Flex>
         </Center>
       )}
       {account.isAdmin() && (
@@ -72,7 +88,12 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          회원목록
+          <Show below={"lg"}>
+            <FontAwesomeIcon icon={faUsers} />
+          </Show>
+          <Hide below={"lg"}>
+            <FontAwesomeIcon icon={faUsers} />
+          </Hide>
         </Center>
       )}
       {account.isLoggedIn() || (
@@ -117,7 +138,12 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          로그아웃
+          <Show below={"lg"}>
+            <FontAwesomeIcon icon={faRightFromBracket} />
+          </Show>
+          <Hide below={"lg"}>
+            <FontAwesomeIcon icon={faRightFromBracket} />
+          </Hide>
         </Center>
       )}
     </Flex>
