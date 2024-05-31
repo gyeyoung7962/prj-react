@@ -5,12 +5,21 @@ import { Navbar } from "../component/Navbar.jsx";
 
 export function Home() {
   return (
-    <Box mb={300}>
-      <Navbar />
+    <Box>
+      <Navbar
+        mx={{
+          base: 0,
+          lg: 0,
+        }}
+      />
       <Box
         mx={{
           base: 0,
           lg: 200,
+        }}
+        my={{
+          base: 0,
+          lg: 0,
         }}
         mt={10}
       >

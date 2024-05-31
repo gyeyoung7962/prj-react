@@ -135,7 +135,13 @@ export function MemberSignup() {
   }
 
   return (
-    <Center>
+    <Center
+      style={{
+        display: "flex",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <Box w={500}>
         <Box mb={10}>
           <Heading>회원가입</Heading>
