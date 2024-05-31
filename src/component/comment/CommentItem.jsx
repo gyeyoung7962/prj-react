@@ -15,14 +15,17 @@ import {
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { useContext } from "react";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { useContext, useState } from "react";
 import { LoginContext } from "../LoginProvider.jsx";
+import { CommentEdit } from "./CommentEdit.jsx";
 
 export function CommentItem({ comment, isProcessing, setIsProcessing }) {
+  const [isEditing, setIsEditing] = useState(false);
   const account = useContext(LoginContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
+
   function handleRemoveClick() {
     setIsProcessing(true);
     axios
@@ -57,11 +60,22 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
       {account.hasAccess(comment.memberId) && (
         <Flex>
           <Box>
+            <Button colorScheme={"purple"} onClick={() => setIsEditing(true)}>
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </Button>
             <Button isLoading={isProcessing} colorScheme="red" onClick={onOpen}>
               <FontAwesomeIcon icon={faTrashCan} />
             </Button>
           </Box>
         </Flex>
+      )}
+      {isEditing && (
+        <CommentEdit
+          comment={comment}
+          setIsEditting={setIsEditing}
+          setIsProcessing={setIsProcessing}
+          isProcessing={isProcessing}
+        />
       )}
       {account.hasAccess(comment.memberId) && (
         <Modal isOpen={isOpen} onClose={onClose}>
