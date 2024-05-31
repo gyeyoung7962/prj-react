@@ -188,6 +188,8 @@ export function BoardView() {
         </Box>
       )}
 
+      <Box mb={20}></Box>
+
       <CommentComponent boardId={board.id} />
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -196,7 +198,7 @@ export function BoardView() {
           <ModalHeader></ModalHeader>
           <ModalBody>삭제하시겠습니까?</ModalBody>
           <ModalFooter>
-            <Flex>
+            <Flex gap={2}>
               <Button onClick={onClose}>취소</Button>
               <Button colorScheme={"red"} onClick={handleClickRemove}>
                 확인
